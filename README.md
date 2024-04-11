@@ -1,5 +1,4 @@
-# Algorytmy i Struktury danych - główne repozytorium
-### Każdy projekt to inny branch
+# Drzewa binarne
 
 Jan Czyżewski 160377
 Albert Łapa 160381
