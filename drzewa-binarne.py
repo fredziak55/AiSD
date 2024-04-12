@@ -378,10 +378,10 @@ def main():
             avl_root = avl_tree.rebalance(avl_root)
             print("AVL tree has been rebalanced.")
         elif command == 'Remove':
-            key = int(input('remove> '))
-            avl_root = avl_tree.delete(avl_root, key)
-            bst_root = bst_tree.delete(bst_root, key)
-            print(f"Node with value {key} has been removed.")
+            keys = list(map(int, input('remove> ').split()))
+            for key in keys:
+                avl_root = avl_tree.delete(avl_root, key)
+                bst_root = bst_tree.delete(bst_root, key)
         elif command == 'FindMinMax':
             avl_min = avl_tree.minValueNode(avl_root).key
             avl_max = avl_tree.maxValueNode(avl_root).key
