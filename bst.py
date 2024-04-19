@@ -94,3 +94,27 @@ class BST:
             print(root.key, end=" ")
             self.preOrder(root.left)
             self.preOrder(root.right)
+
+    def to_sorted_array(self, root, arr=None):
+        if arr is None:
+            arr = []
+        if root:
+            self.to_sorted_array(root.left, arr)
+            arr.append(root.key)
+            self.to_sorted_array(root.right, arr)
+        return arr
+
+    def sorted_array_to_bst(self, arr):
+        if not arr:
+            return None
+
+        mid = len(arr) // 2
+
+        root = Node(arr[mid])
+        root.left = self.sorted_array_to_bst(arr[:mid])
+        root.right = self.sorted_array_to_bst(arr[mid+1:])
+
+        return root
+
+    def rebalance(self, root):
+        return self.sorted_array_to_bst(self.to_sorted_array(root))
