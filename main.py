@@ -1,5 +1,3 @@
-#/bin/python3
-
 import bst
 import avl
 import os 

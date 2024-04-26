@@ -151,37 +151,35 @@ class AVLTree:
 
         return root
 
-    def leftRotate(self, z):
-        # Store z's right child in y
-        y = z.right
-        # Store y's left child in T2
-        T2 = y.left
-
+    def leftRotate(self, x):
+        if x is None:
+            return None
+        y = x.right
+        T2 = y.left if y else None
         # Perform rotation
-        y.left = z
-        z.right = T2
-
+        if y:
+            y.left = x
+        x.right = T2
         # Update heights
-        z.height = 1 + max(self.getHeight(z.left), self.getHeight(z.right))
-        y.height = 1 + max(self.getHeight(y.left), self.getHeight(y.right))
-
+        x.height = 1 + max(self.getHeight(x.left), self.getHeight(x.right))
+        if y:
+            y.height = 1 + max(self.getHeight(y.left), self.getHeight(y.right))
         # Return the new root
         return y
 
     def rightRotate(self, y):
-        # Store y's left child in x
+        if y is None:
+            return None
         x = y.left
-        # Store x's right child in T2
-        T2 = x.right
-
+        T2 = x.right if x else None
         # Perform rotation
-        x.right = y
+        if x:
+            x.right = y
         y.left = T2
-
         # Update heights
         y.height = 1 + max(self.getHeight(y.left), self.getHeight(y.right))
-        x.height = 1 + max(self.getHeight(x.left), self.getHeight(x.right))
-
+        if x:
+            x.height = 1 + max(self.getHeight(x.left), self.getHeight(x.right))
         # Return the new root
         return x
 
