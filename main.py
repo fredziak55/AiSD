@@ -1,3 +1,5 @@
+#/bin/python3
+
 import bst
 import avl
 import os 
@@ -60,7 +62,6 @@ def chosenTree(treeName, tree, root):
     treeName = treeName.upper()
     while True:
         command = input('command> ').lower()
-        print(command)
         if command == 'help':
             print("--- Help ---")
             print("Commands:")
