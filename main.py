@@ -42,8 +42,9 @@ def writeTikzToFile(filename, text):
         file.write("\\documentclass{standalone}\n")
         file.write("\\usepackage{tikz}\n")
         file.write("\\begin{document}\n")
-        file.write("\\begin{tikzpicture}[\n")
-        file.write("level distance=1cm,\n")
+        file.write("\\begin{tikzpicture}\n")
+        file.write("[level distance=10mm,\n")
+        file.write("every node/.style={fill=red!60,circle,inner sep=1pt, minimum size=6mm},")
         file.write("level 1/.style={sibling distance=3cm},\n")
         file.write("level 2/.style={sibling distance=1.5cm},\n")
         file.write("level 3/.style={sibling distance=1cm}\n")
@@ -72,6 +73,7 @@ def chosenTree(treeName, tree, root):
             print("Remove - remove a node from the trees")
             print("FindMinMax - find the minimum and maximum values in the trees")
             print("SortAndMedian - sort the trees and find the median")
+            print("Tickz - save the tree to a txt file")
             print("-------------")
             continue
         if command == 'exit':
