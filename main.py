@@ -167,6 +167,7 @@ def get_float_input(prompt):
 
 def benchmark():
     hamilton_times = []
+    euler_times = []
     non_hamilton_times = []
 
     # Create Hamiltonian graphs and measure times
@@ -174,10 +175,19 @@ def benchmark():
         graph = create_graph(nodes, 0.3)
         graph = create_hamiltonian_cycle(graph, nodes)
         start = time.time()
-        find_euler_cycle(graph)
         find_hamilton_cycle(graph)
         end = time.time()
         hamilton_times.append(end - start)
+        print(hamilton_times)
+
+    #euler
+    for nodes in range(10, 10001, 1000):
+        graph = create_graph(nodes, 0.3)
+        graph = create_hamiltonian_cycle(graph, nodes)
+        start = time.time()
+        find_euler_cycle(graph)
+        end = time.time()
+        euler_times.append(end - start)
         print(hamilton_times)
 
     # Create non-Hamiltonian graphs and measure times
@@ -197,7 +207,15 @@ def benchmark():
     plt.xlabel('Number of nodes')
     plt.ylabel('Time (seconds)')
     plt.legend()
-    plt.show()
+    plt.savefig('hamilton.png')  # Save the figure to a file
+    
+    # Plot the results for Euler graphs
+    plt.figure(figsize=(10, 6))
+    plt.plot(range(10, 10001, 1000), euler_times, label='Eulerian')
+    plt.xlabel('Number of nodes')
+    plt.ylabel('Time (seconds)')
+    plt.legend()
+    plt.savefig('euler.png')  # Save the figure to a file
 
     # Plot the results for non-Hamiltonian graphs
     plt.figure(figsize=(10, 6))
@@ -205,7 +223,9 @@ def benchmark():
     plt.xlabel('Number of nodes')
     plt.ylabel('Time (seconds)')
     plt.legend()
-    plt.show()
+    plt.savefig('non_hamilton.png')  # Save the figure to a file
+    
+    
 
 # --------------------------------------------------------------------------------------------
 
