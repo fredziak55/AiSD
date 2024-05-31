@@ -1,5 +1,3 @@
-# Algorytmy i Struktury danych - główne repozytorium
-### Każdy projekt to inny branch
+# Plecak
 
-Jan Czyżewski 160377
-Albert Łapa 160381
+Implementacja plecaka na AiSD
