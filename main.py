@@ -1,4 +1,10 @@
 from itertools import combinations
+import os
+import time
+import glob
+import matplotlib.pyplot as plt
+import glob
+import time
 
 def knapsack_brute_force(values, weights, capacity):
     best_value = 0
@@ -41,9 +47,115 @@ def knapsack_dynamic_programming(values, weights, capacity):
 
     return included
 
-values = [2, 1, 6, 7, 3]
-weights = [1, 1, 3, 3, 2]
-capacity = 7
+def read_knapsack_file(filename):
+    # Get the current directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    # Join the current directory with the filename
+    file_path = os.path.join(current_dir, filename)
 
-print(knapsack_brute_force(values, weights, capacity))  # Output: (1, 2)
-print(knapsack_dynamic_programming(values, weights, capacity))  # Output: [2, 1]
+    with open(file_path, 'r') as f:
+        lines = f.readlines()
+
+    capacity = int(lines[0].strip())
+    num_items = int(lines[1].strip())
+
+    values = []
+    weights = []
+    for line in lines[2:]:
+        value, weight = map(int, line.split(','))
+        values.append(value)
+        weights.append(weight)
+
+    return capacity, values, weights
+
+def run_knapsack_algorithms(filename):
+    capacity, values, weights = read_knapsack_file(filename)
+
+    # Measure the time of the brute force algorithm
+    start_time = time.time()
+    brute_force_result = knapsack_brute_force(values, weights, capacity)
+    end_time = time.time()
+    brute_force_time = round(end_time - start_time, 50)
+    # print(f"Brute force time: {round(end_time - start_time, 10)} seconds")
+
+    # Measure the time of the dynamic programming algorithm
+    start_time = time.time()
+    dynamic_programming_result = knapsack_dynamic_programming(values, weights, capacity)
+    end_time = time.time()
+    # print(f"Dynamic programming time: {round(end_time - start_time, 10)} seconds")
+    dynamic_programming_time = round(end_time - start_time, 50)
+
+    return brute_force_time, dynamic_programming_time
+
+
+
+def benchmark():
+    # Get all .txt files in the current directory
+    files = glob.glob('*.txt')
+    print(f"Files found: {files}")
+    
+    # Run the algorithms on each file
+    for file in files:
+        print(f"Running algorithms on {file}...")
+        brute_force_result, dynamic_programming_result = run_knapsack_algorithms(file)
+        # print(f"Brute force result: {brute_force_result}")
+        # print(f"Dynamic programming result: {dynamic_programming_result}")
+
+
+
+def benchmark():
+    # Get all .txt files in the current directory
+    files = glob.glob('*.txt')
+
+    # Lists to store the results
+    constant_items_times_dynamic = []
+    constant_capacity_times_dynamic = []
+    constant_items_times_brute = []
+    constant_capacity_times_brute = []
+
+    # Run the algorithms on each file
+    for file in files:
+        brute_force_time, dynamic_programming_time = run_knapsack_algorithms(file)
+        if 'capacity' in file:
+            constant_items_times_dynamic.append(dynamic_programming_time)
+            constant_items_times_brute.append(brute_force_time)
+        elif 'items' in file:
+            constant_capacity_times_dynamic.append(dynamic_programming_time)
+            constant_capacity_times_brute.append(brute_force_time)
+    print(constant_items_times_dynamic)
+    print(constant_items_times_brute)
+    print(constant_capacity_times_dynamic)
+    print(constant_capacity_times_brute)
+    
+    # Create the graphs
+    x_values = range(1, 27, 5)
+    plt.figure()
+    plt.plot(x_values, constant_items_times_dynamic)
+    plt.title('Dynamic Programming Time with Constant Number of Items')
+    plt.xlabel('Capacity')
+    plt.ylabel('Time (seconds)')
+    plt.savefig('constant_items_dynamic.png')
+
+    plt.figure()
+    plt.plot(x_values, constant_items_times_brute)
+    plt.title('Brute Force Time with Constant Number of Items')
+    plt.xlabel('Capacity')
+    plt.ylabel('Time (seconds)')
+    plt.savefig('constant_items_brute.png')
+
+    plt.figure()
+    plt.plot(x_values, constant_capacity_times_dynamic)
+    plt.title('Dynamic Programming Time with Constant Capacity')
+    plt.xlabel('Number of Items')
+    plt.ylabel('Time (seconds)')
+    plt.savefig('constant_capacity_dynamic.png')
+
+    plt.figure()
+    plt.plot(x_values, constant_capacity_times_brute)
+    plt.title('Brute Force Time with Constant Capacity')
+    plt.xlabel('Number of Items')
+    plt.ylabel('Time (seconds)')
+    plt.savefig('constant_capacity_brute.png')
+
+# Run the benchmark
+benchmark()
