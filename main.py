@@ -36,7 +36,7 @@ def export_graph_to_tikz(graph, filename):
         f.write("\\end{scope}\n")
         f.write("\\begin{scope}[>={Stealth[black]}]\n")
         for i, j in G.edges():
-            f.write(f"\\draw[->] (v{i+1}) -- (v{j+1});\n")
+            f.write(f"\\draw[] (v{i+1}) -- (v{j+1});\n")
         f.write("\\end{scope}\n")
         f.write("\\end{tikzpicture}\n")
         f.write("\\end{document}\n")
