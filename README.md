@@ -1,5 +1,5 @@
-# Algorytmy i Struktury danych - główne repozytorium
-### Każdy projekt to inny branch
+# Algorithms and Data Structures - main repository
+### Each task is in different branch
 
 Jan Czyżewski 160377
 Albert Łapa 160381
